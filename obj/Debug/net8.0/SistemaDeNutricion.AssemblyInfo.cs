@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SistemaDeNutricion")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+81b8362c562a7459a2cfaa24d17979d68a09c2fe")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b86d95da55511df7a6a816819adb15ea53c0e680")]
 [assembly: System.Reflection.AssemblyProductAttribute("SistemaDeNutricion")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SistemaDeNutricion")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
