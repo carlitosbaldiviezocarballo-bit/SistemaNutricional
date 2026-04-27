@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\prograweb\\SistemaDeNutricion\\SistemaDeNutricion.csproj": {}
+    "C:\\Proyectofinal\\SistemaDeNutricion\\SistemaDeNutricion.csproj": {}
   },
   "projects": {
-    "C:\\prograweb\\SistemaDeNutricion\\SistemaDeNutricion.csproj": {
+    "C:\\Proyectofinal\\SistemaDeNutricion\\SistemaDeNutricion.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\prograweb\\SistemaDeNutricion\\SistemaDeNutricion.csproj",
+        "projectUniqueName": "C:\\Proyectofinal\\SistemaDeNutricion\\SistemaDeNutricion.csproj",
         "projectName": "SistemaDeNutricion",
-        "projectPath": "C:\\prograweb\\SistemaDeNutricion\\SistemaDeNutricion.csproj",
+        "projectPath": "C:\\Proyectofinal\\SistemaDeNutricion\\SistemaDeNutricion.csproj",
         "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\prograweb\\SistemaDeNutricion\\obj\\",
+        "outputPath": "C:\\Proyectofinal\\SistemaDeNutricion\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

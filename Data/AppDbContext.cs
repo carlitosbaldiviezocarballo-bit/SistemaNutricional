@@ -12,7 +12,7 @@ public class AppDbContext : DbContext
         public DbSet<Consulta> Consultas { get; set; }
         public DbSet<PlanNutricional> PlanesNutricionales { get; set; }
         public DbSet<HistorialPaciente> HistorialesPaciente { get; set; }
-        public DbSet<Recordatorio> Recordatorios { get; set; }
+        public DbSet<Diagnostico> Diagnosticos { get; set; }
         public DbSet<DiaPlan>DiasPlan { get; set; }
       protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,14 +28,16 @@ public class AppDbContext : DbContext
                 .HasMaxLength(100);
             modelBuilder.Entity<Paciente>()
                 .Property(x => x.CI)
-                .HasMaxLength(20);
+                .HasMaxLength(7);
+            modelBuilder.Entity<Paciente>()
+                .HasIndex(x => x.CI)
+                .IsUnique();
             modelBuilder.Entity<Paciente>()
                 .Property(x => x.PesoInicial)
                 .HasColumnType("decimal(6,2)");
             modelBuilder.Entity<Paciente>()
                 .Property(x => x.TallaInicial)
                 .HasColumnType("decimal(3,2)");
-
             modelBuilder.Entity<Consulta>()
                 .ToTable("Consultas");
             modelBuilder.Entity<Consulta>()
@@ -43,7 +45,6 @@ public class AppDbContext : DbContext
                 .WithMany()
                 .HasForeignKey(x => x.IdPaciente)
                 .OnDelete(DeleteBehavior.Restrict);
-                
             modelBuilder.Entity<HistorialPaciente>()
                 .ToTable("HistorialesPacientes");
             modelBuilder.Entity<HistorialPaciente>()
@@ -60,26 +61,13 @@ public class AppDbContext : DbContext
             modelBuilder.Entity<HistorialPaciente>()
                 .Property(x => x.IMC)
                 .HasColumnType("decimal(4,1)");
-
             modelBuilder.Entity<PlanNutricional>()
                 .ToTable("PlanesNutricionales");
             modelBuilder.Entity<PlanNutricional>()
-                .HasOne(x => x.Consulta)
+                .HasOne(x => x.Diagnostico)
                 .WithMany()
-                .HasForeignKey(x => x.IdConsulta)
+                .HasForeignKey(x => x.IdDiagnostico)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<Recordatorio>()
-                .ToTable("Recordatorios");
-            modelBuilder.Entity<Recordatorio>()
-                .HasOne(x => x.Paciente)
-                .WithMany()
-                .HasForeignKey(x => x.IdPaciente)
-                .OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<Recordatorio>()
-                .Property(x => x.Mensaje)
-                .HasMaxLength(200);
-
             modelBuilder.Entity<DiaPlan>()
                 .ToTable("DiasPlan");
             modelBuilder.Entity<DiaPlan>()
@@ -102,5 +90,9 @@ public class AppDbContext : DbContext
             modelBuilder.Entity<DiaPlan>()
                 .Property(x => x.Meriendas)
                 .HasMaxLength(300);
+            modelBuilder.Entity<Diagnostico>()
+              .HasOne(d => d.Consulta)
+              .WithMany()
+              .HasForeignKey(d => d.IdConsulta);
     }
 }

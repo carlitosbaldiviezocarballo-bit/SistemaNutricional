@@ -1,4 +1,5 @@
 ﻿using System;
+namespace SistemaDeNutricion.DTO.Paciente;
 
 public class AgregarPacienteinput
 {

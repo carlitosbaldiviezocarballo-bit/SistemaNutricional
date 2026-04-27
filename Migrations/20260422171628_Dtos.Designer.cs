@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SistemaDeNutricion.Data;
 
@@ -11,9 +12,11 @@ using SistemaDeNutricion.Data;
 namespace SistemaDeNutricion.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260422171628_Dtos")]
+    partial class Dtos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -166,8 +169,8 @@ namespace SistemaDeNutricion.Migrations
 
                     b.Property<string>("CI")
                         .IsRequired()
-                        .HasMaxLength(7)
-                        .HasColumnType("nvarchar(7)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -185,9 +188,6 @@ namespace SistemaDeNutricion.Migrations
                         .HasColumnType("decimal(3,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CI")
-                        .IsUnique();
 
                     b.ToTable("Pacientes", (string)null);
                 });

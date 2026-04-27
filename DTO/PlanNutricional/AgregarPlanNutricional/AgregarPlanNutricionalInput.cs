@@ -3,7 +3,7 @@
     public class AgregarPlanNutricionalInput
     {
         public string Nombre { get; set; } = string.Empty;
-        public int IdConsulta { get; set; }
+        public int IdDiagnostico { get; set; }
         public List<DiaPlanInput> Dias { get; set; } = new();
     }
 

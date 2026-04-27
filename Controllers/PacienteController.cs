@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SistemaDeNutricion.Data;
 using SistemaDeNutricion.Entidades;
-
+using SistemaDeNutricion.DTO.Paciente;
 
 namespace SistemaDeNutricion.Controllers
 {
@@ -34,25 +34,38 @@ namespace SistemaDeNutricion.Controllers
         return Ok(paciente);
     }
         // POST: api/paciente
-    [HttpPost]
-    public async Task<ActionResult<Agregarpacienteoutput>> PostPaciente([FromBody] Agregarpacienteoutput paciente)
-    {
+        [HttpPost]
+        public async Task<ActionResult<Agregarpacienteoutput>> PostPaciente([FromBody] AgregarPacienteinput input)
+        {
             var pac = new Paciente
             {
-                Id = paciente.Id,
-                Nombre = paciente.NombreCompleto,
-                CI = paciente.CI,
-                Objetivo = paciente.Objetivo,
-                Alergias = paciente.Alergias,
-                PesoInicial = paciente.PesoInicial,
-                TallaInicial = paciente.TallaInicial
+                Nombre = input.Nombre,
+                Apellido = input.Apellido,
+                CI = input.CI,
+                Objetivo = input.Objetivo,
+                Alergias = input.Alergias,
+                PesoInicial = input.PesoInicial,
+                TallaInicial = input.TallaInicial
             };
+
             _context.Pacientes.Add(pac);
             await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(GetPaciente), new { id = paciente.Id }, paciente);
-    }
-    // PUT: api/paciente/5
-    [HttpPut("{id}")]
+
+            var output = new Agregarpacienteoutput
+            {
+                Id = pac.Id,
+                NombreCompleto = pac.Nombre + " " + pac.Apellido,
+                CI = pac.CI,
+                Objetivo = pac.Objetivo,
+                Alergias = pac.Alergias,
+                PesoInicial = pac.PesoInicial,
+                TallaInicial = pac.TallaInicial
+            };
+
+            return CreatedAtAction(nameof(GetPaciente), new { id = pac.Id }, output);
+        }
+        // PUT: api/paciente/5
+        [HttpPut("{id}")]
     public async Task<IActionResult> PutPaciente(int id, [FromBody]Paciente paciente)
     {
         if (id != paciente.Id)

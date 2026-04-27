@@ -26,6 +26,12 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
+    <Folder Include="DTO\Consulta\" />
+    <Folder Include="DTO\Consulta\AgregarConsulta\" />
+    <Folder Include="DTO\Diagnostico\" />
+    <Folder Include="DTO\Diagnostico\AgregarDiagnostico\" />
+    <Folder Include="DTO\HistorialPaciente\" />
+    <Folder Include="DTO\HistorialPaciente\AgregarHistorialPaciente\" />
   </ItemGroup>
 
 </Project>

@@ -5,7 +5,7 @@
         public int Id { get; set; }
         public bool Estado { get; set; }
         public string Nombre { get; set; } = string.Empty;
-        public int IdConsulta { get; set; }
+        public int IdDiagnostico { get; set; }
         public List<DiaPlanOutput> Dias { get; set; } = new();
     }
 

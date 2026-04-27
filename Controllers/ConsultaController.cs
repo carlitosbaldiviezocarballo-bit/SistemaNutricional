@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SistemaDeNutricion.Data;
+using SistemaDeNutricion.DTO.Consulta.AgregarConsulta;
 using SistemaDeNutricion.Entidades;
 
 namespace SistemaDeNutricion.Controllers
@@ -35,20 +36,42 @@ namespace SistemaDeNutricion.Controllers
     }
 
     [HttpPost]
-    public async Task<ActionResult<Consulta>> PostConsulta(Consulta consulta)
+public async Task<ActionResult<AgregarConsultaOutput>> PostConsulta([FromBody] AgregarConsultaInput input)
+{
+    var paciente = await _context.Pacientes.FindAsync(input.IdPaciente);
+    if (paciente == null)
+        return BadRequest("El paciente no existe");
+
+    var pacienterep = await _context.Consultas
+        .AnyAsync(c => c.IdPaciente == input.IdPaciente 
+                    && c.Fecha.Date == input.Fecha.Date);
+
+    if (pacienterep)
+        return BadRequest("El paciente ya tiene una consulta registrada para este día.");
+
+    var consulta = new Consulta
     {
-       
-        var pacienteExiste = await _context.Pacientes
-            .AnyAsync(p => p.Id == consulta.IdPaciente);
+        Fecha = input.Fecha, 
+        Motivo = input.Motivo,
+        Estado = input.Estado ?? "Programada",
+        IdPaciente = input.IdPaciente,
+        Paciente = paciente
+    };
 
-        if (!pacienteExiste)
-            return BadRequest("El paciente no existe");
+    _context.Consultas.Add(consulta);
+    await _context.SaveChangesAsync();
 
-        _context.Consultas.Add(consulta);
-        await _context.SaveChangesAsync();
+    var output = new AgregarConsultaOutput
+    {
+        Id = consulta.Id,
+        Fecha = consulta.Fecha,
+        Motivo = consulta.Motivo,
+        Estado = consulta.Estado,
+        IdPaciente = consulta.IdPaciente
+    };
 
-        return CreatedAtAction(nameof(GetConsulta), new { id = consulta.Id }, consulta);
-    }
+    return CreatedAtAction(nameof(GetConsulta), new { id = consulta.Id }, output);
+}
 
     [HttpPut("{id}")]
     public async Task<IActionResult> PutConsulta(int id, Consulta consulta)

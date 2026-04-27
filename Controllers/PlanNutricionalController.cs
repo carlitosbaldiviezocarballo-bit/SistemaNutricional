@@ -30,7 +30,7 @@ namespace SistemaDeNutricion.Controllers
                 Id = plan.Id,
                 Estado = plan.Estado,
                 Nombre = plan.Nombre,
-                IdConsulta = plan.IdConsulta,
+                IdDiagnostico = plan.IdDiagnostico,
                 Dias = plan.Dias.Select(d => new DiaPlanOutput
                 {
                     Id = d.Id,
@@ -60,7 +60,7 @@ namespace SistemaDeNutricion.Controllers
                 Id = plan.Id,
                 Estado = plan.Estado,
                 Nombre = plan.Nombre,
-                IdConsulta = plan.IdConsulta,
+                IdDiagnostico = plan.IdDiagnostico,
                 Dias = plan.Dias.Select(d => new DiaPlanOutput
                 {
                     Id = d.Id,
@@ -78,15 +78,15 @@ namespace SistemaDeNutricion.Controllers
         [HttpPost]
         public async Task<ActionResult<AgregarPlanNutricionalOutput>> PostPlan([FromBody] AgregarPlanNutricionalInput input)
         {
-            var consulta = await _context.Consultas.FindAsync(input.IdConsulta);
-            if (consulta == null)
+            var diagnostico = await _context.Diagnosticos.FindAsync(input.IdDiagnostico);
+            if (diagnostico == null)
                 return BadRequest("La consulta especificada no existe.");
 
             var plan = new PlanNutricional
             {
                 Nombre = input.Nombre,
-                IdConsulta = input.IdConsulta,
-                Consulta = consulta,
+                IdDiagnostico = input.IdDiagnostico,
+                Diagnostico = diagnostico,
                 Dias = input.Dias.Select(d => new DiaPlan
                 {
                     DiaSemana = d.DiaSemana,
@@ -106,7 +106,7 @@ namespace SistemaDeNutricion.Controllers
                 Id = plan.Id,
                 Estado = plan.Estado,
                 Nombre = plan.Nombre,
-                IdConsulta = plan.IdConsulta,
+                IdDiagnostico = plan.IdDiagnostico,
                 Dias = plan.Dias.Select(d => new DiaPlanOutput
                 {
                     Id = d.Id,
@@ -132,7 +132,7 @@ namespace SistemaDeNutricion.Controllers
                 return NotFound();
 
             plan.Nombre = input.Nombre;
-            plan.IdConsulta = input.IdConsulta;
+            plan.IdDiagnostico = input.IdDiagnostico;
 
             _context.DiasPlan.RemoveRange(plan.Dias);
             plan.Dias = input.Dias.Select(d => new DiaPlan
