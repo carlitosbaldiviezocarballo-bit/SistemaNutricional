@@ -148,19 +148,5 @@ namespace SistemaDeNutricion.Controllers
             await _context.SaveChangesAsync();
             return NoContent();
         }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePlan(int id)
-        {
-            var plan = await _context.PlanesNutricionales.FindAsync(id);
-
-            if (plan == null)
-                return NotFound();
-
-            _context.PlanesNutricionales.Remove(plan);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
     }
 }

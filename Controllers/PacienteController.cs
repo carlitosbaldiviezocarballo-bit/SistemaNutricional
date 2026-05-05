@@ -102,5 +102,20 @@ namespace SistemaDeNutricion.Controllers
 
         return NoContent();
     }
+    // GET: api/paciente/buscar?nombre=Maria&ci=7654321
+    [HttpGet("buscar")]
+    public async Task<ActionResult> BuscarPacientes([FromQuery] string? nombre, [FromQuery] string? ci)
+    {
+    var query = _context.Pacientes.AsNoTracking().AsQueryable();
+
+    if (!string.IsNullOrEmpty(nombre))
+        query = query.Where(p => p.Nombre.Contains(nombre));
+
+    if (!string.IsNullOrEmpty(ci))
+        query = query.Where(p => p.CI == ci);
+
+    var resultado = await query.ToListAsync();
+    return Ok(resultado);
+    }
     }
 }

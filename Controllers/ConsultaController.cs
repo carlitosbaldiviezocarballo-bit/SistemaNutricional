@@ -102,19 +102,6 @@ public async Task<ActionResult<AgregarConsultaOutput>> PostConsulta([FromBody] A
         return NoContent();
     }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteConsulta(int id)
-    {
-        var consulta = await _context.Consultas.FindAsync(id);
-
-        if (consulta == null)
-            return NotFound();
-
-        _context.Consultas.Remove(consulta);
-        await _context.SaveChangesAsync();
-
-        return NoContent();
-    }
   }
 }
 
